@@ -1,23 +1,27 @@
 import React from 'react';
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
+  const location = useLocation();
+
   return (
-    <Navbar bg="white" expand="lg" sticky="top" className="shadow-sm">
+    <Navbar
+      bg="white"
+      expand="lg"
+      sticky="top"
+      className="shadow-sm"
+    >
       <Container>
-        <Navbar.Brand href="/" className="fw-bold">
-          <strong>SKE</strong> Textiles & Readymades
+        <Navbar.Brand as={Link} to="/" className="fw-bold text-dark">
+          <span className="text-primary">SKE</span> Textiles
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarNav" />
         <Navbar.Collapse id="navbarNav">
-          <Nav className="ms-auto">
-            <Nav.Link href="/" active>Home</Nav.Link>
-            <Nav.Link href="https://sketextiles.gt.tc/products.php">Products</Nav.Link>
-            <Nav.Link href="#contact">Contact</Nav.Link>
-            <NavDropdown title="Login" id="loginDropdown">
-              <NavDropdown.Item href="https://sketextiles.gt.tc/admin/login.php">Admin Login</NavDropdown.Item>
-              <NavDropdown.Item href="https://sketextiles.gt.tc/host/login.php">Host Login</NavDropdown.Item>
-            </NavDropdown>
+          <Nav className="ms-auto align-items-center">
+            <Nav.Link as={Link} to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Nav.Link>
+            <Nav.Link as={Link} to="/products" className={location.pathname === '/products' ? 'active' : ''}>Products</Nav.Link>
+            <Nav.Link href="/#contact">Contact</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

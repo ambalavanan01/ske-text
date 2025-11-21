@@ -6,20 +6,41 @@ const Contact = () => {
     const [validated, setValidated] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
-    const handleSubmit = (event) => {
-        const form = event.currentTarget;
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        event.stopPropagation();
+        const form = event.currentTarget;
 
         if (form.checkValidity() === false) {
+            event.stopPropagation();
             setValidated(true);
             return;
         }
 
         setValidated(true);
-        setSubmitted(true);
-        console.log("Form submitted!");
-        // Here you would typically send the data to a backend
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('https://formspree.io/f/mgvdgkwd', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                setSubmitted(true);
+                form.reset();
+                setValidated(false);
+            } else {
+                alert("There was a problem submitting your form");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("There was a problem submitting your form");
+        }
     };
 
     return (
@@ -44,27 +65,27 @@ const Contact = () => {
                     <Col lg={6} data-aos="fade-left">
                         {submitted && (
                             <Alert variant="success" onClose={() => setSubmitted(false)} dismissible>
-                                Message sent successfully! (Simulation)
+                                Message sent successfully! We will get back to you soon.
                             </Alert>
                         )}
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <Form.Group className="form-floating mb-3" controlId="name">
-                                <Form.Control type="text" placeholder="Your Name" required />
+                                <Form.Control type="text" name="name" placeholder="Your Name" required />
                                 <Form.Label>Your Name</Form.Label>
                                 <Form.Control.Feedback type="invalid">Please provide your name.</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className="form-floating mb-3" controlId="phonenumber">
-                                <Form.Control type="tel" placeholder="Phone Number" required />
+                                <Form.Control type="tel" name="phone" placeholder="Phone Number" required />
                                 <Form.Label>Phone Number</Form.Label>
                                 <Form.Control.Feedback type="invalid">Please provide your phone number.</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className="form-floating mb-3" controlId="email">
-                                <Form.Control type="email" placeholder="Your Email" required />
+                                <Form.Control type="email" name="email" placeholder="Your Email" required />
                                 <Form.Label>Your Email</Form.Label>
                                 <Form.Control.Feedback type="invalid">Please provide a valid email.</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className="form-floating mb-3" controlId="message">
-                                <Form.Control as="textarea" placeholder="Your Message" style={{ height: '120px' }} required />
+                                <Form.Control as="textarea" name="message" placeholder="Your Message" style={{ height: '120px' }} required />
                                 <Form.Label>Your Message</Form.Label>
                                 <Form.Control.Feedback type="invalid">Please enter a message.</Form.Control.Feedback>
                             </Form.Group>

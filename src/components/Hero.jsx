@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Link } from 'react-router-dom';
 
 const heroImages = [
     '/assets/hero1.jpg',
@@ -37,7 +38,7 @@ const Hero = () => {
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('${img}')`,
+                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('${img}')`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         opacity: index === currentImageIndex ? 1 : 0,
@@ -48,16 +49,19 @@ const Hero = () => {
             ))}
 
             <div className="container position-relative" data-aos="fade-up" style={{ zIndex: 1 }}>
-                <h1 className="display-3 fw-bold text-white">SKE TEXTILES & READYMADES</h1>
+                <h1 className="display-2 fw-bold text-white mb-2" style={{ letterSpacing: '-2px' }}>SKE TEXTILES</h1>
+                <h2 className="h1 fw-light text-white mb-4">& READYMADES</h2>
 
                 {/* Tamil Subtitle */}
-                <h2 className="hero-subtitle mt-2">(SKE துணிக்கடை)</h2>
+                <h3 className="hero-subtitle mb-4">(SKE துணிக்கடை)</h3>
 
-                <p className="lead mt-3 text-white-50">
-                    Discover our exclusive collection of premium textiles and readymade garments that define elegance.
+                <p className="lead mb-5 text-white-50 mx-auto" style={{ maxWidth: '700px', fontSize: '1.25rem' }}>
+                    Discover our exclusive collection of premium textiles and readymade garments that define elegance and comfort.
                 </p>
 
-                <a href="https://sketextiles.gt.tc/products.php" className="btn btn-primary btn-lg mt-3">Explore Our Collection</a>
+                <Link to="/products" className="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold shadow-lg" style={{ fontSize: '1.1rem' }}>
+                    Explore Our Collection
+                </Link>
             </div>
         </header>
     );

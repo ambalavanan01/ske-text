@@ -1,25 +1,23 @@
-import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navbar';
-import Hero from './components/Hero';
-import WhyUs from './components/WhyUs';
-import Collections from './components/Collections';
-import Brands from './components/Brands';
-import Newsletter from './components/Newsletter';
-import Contact from './components/Contact';
+import Home from './pages/Home';
+import Products from './components/Products';
+import Catalogue from './components/Catalogue';
 import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="App">
-      <Navigation />
-      <Hero />
-      <WhyUs />
-      <Collections />
-      <Brands />
-      <Newsletter />
-      <Contact />
-      <Footer />
-    </div>
+    <Router>
+      <div className="App">
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/catalogue" element={<Catalogue />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
